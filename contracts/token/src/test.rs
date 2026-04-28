@@ -12,8 +12,10 @@ fn test_mint() {
     let contract_id = env.register_contract(None, TokenContract);
     let client = TokenContractClient::new(&env, &contract_id);
 
+    let admin = Address::generate(&env);
     let user = Address::generate(&env);
     
+    client.initialize(&admin, &soroban_sdk::String::from_str(&env, "CloverTrade"), &soroban_sdk::String::from_str(&env, "CLVR"));
     client.mint(&user, &1000);
 
     assert_eq!(client.balance_of(&user), 1000);
@@ -28,13 +30,32 @@ fn test_transfer() {
     let contract_id = env.register_contract(None, TokenContract);
     let client = TokenContractClient::new(&env, &contract_id);
 
+    let admin = Address::generate(&env);
     let user1 = Address::generate(&env);
     let user2 = Address::generate(&env);
 
+    client.initialize(&admin, &soroban_sdk::String::from_str(&env, "CloverTrade"), &soroban_sdk::String::from_str(&env, "CLVR"));
     client.mint(&user1, &1000);
     client.transfer(&user1, &user2, &400);
 
     assert_eq!(client.balance_of(&user1), 600);
     assert_eq!(client.balance_of(&user2), 400);
     assert_eq!(client.total_supply(), 1000);
+}
+
+#[test]
+fn test_metadata() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let contract_id = env.register_contract(None, TokenContract);
+    let client = TokenContractClient::new(&env, &contract_id);
+
+    let admin = Address::generate(&env);
+    
+    client.initialize(&admin, &soroban_sdk::String::from_str(&env, "CloverTrade"), &soroban_sdk::String::from_str(&env, "CLVR"));
+
+    assert_eq!(client.name(), soroban_sdk::String::from_str(&env, "CloverTrade"));
+    assert_eq!(client.symbol(), soroban_sdk::String::from_str(&env, "CLVR"));
+    assert_eq!(client.decimals(), 7);
 }

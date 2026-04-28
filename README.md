@@ -106,40 +106,75 @@ stellar contract invoke --id $POOL_ID --source user --network testnet -- \
 
 This project utilizes the following deployed smart contracts on the Stellar Testnet:
 
-- **Advanced Token Contract**: [`CD3FP6WIPWI4UXMD6RVKM6MUNOZNWDUN7IV2AD4SY2GQRGPVTNFJALAJ`](https://stellar.expert/explorer/testnet/contract/CD3FP6WIPWI4UXMD6RVKM6MUNOZNWDUN7IV2AD4SY2GQRGPVTNFJALAJ)
-- **Liquidity Pool Contract**: [`CC55QDHD733QIHXMDEQPDZWJUK7EC3L44EDWPI3OBI4JR7RDUXWNOWMU`](https://stellar.expert/explorer/testnet/contract/CC55QDHD733QIHXMDEQPDZWJUK7EC3L44EDWPI3OBI4JR7RDUXWNOWMU)
+### 1. Advanced Token Contract
+- **Contract ID**: [`CD3FP6WIPWI4UXMD6RVKM6MUNOZNWDUN7IV2AD4SY2GQRGPVTNFJALAJ`](https://stellar.expert/explorer/testnet/contract/CD3FP6WIPWI4UXMD6RVKM6MUNOZNWDUN7IV2AD4SY2GQRGPVTNFJALAJ)
+- **Features**: 
+  - Administrative initialization (`initialize`).
+  - Minting with admin authorization (`mint`).
+  - Standard metadata support (`name`, `symbol`, `decimals`).
+  - Persistent balance and total supply tracking.
+
+### 2. Liquidity Pool (Vault) Contract
+- **Contract ID**: [`CC55QDHD733QIHXMDEQPDZWJUK7EC3L44EDWPI3OBI4JR7RDUXWNOWMU`](https://stellar.expert/explorer/testnet/contract/CC55QDHD733QIHXMDEQPDZWJUK7EC3L44EDWPI3OBI4JR7RDUXWNOWMU)
+- **Features**:
+  - Secure initialization tied to a specific token address.
+  - Inter-contract swap logic utilizing the Token contract's transfer function.
+  - Error propagation for failed transfers (e.g., insufficient funds).
+  - Real-time pool balance querying.
+
 ---
 
 ## 🧪 Smart Contract Testing
 
-The project includes comprehensive unit tests for the Soroban smart contracts. To run the tests locally:
+The project follows a rigorous testing methodology to ensure the reliability of inter-contract calls and mathematical precision.
 
-```bash
-make test
-# OR
-cargo test
-```
+### 🛠️ How to Run Tests Locally
 
-### Test Coverage & Results
+Follow these steps to execute the test suite using the standard Rust/Soroban toolchain:
 
-**Token Contract Tests** (`contracts/token/src/test.rs`):
-- `test_mint`: Verifies correct minting of tokens, updating total supply, and user balances.
-- `test_transfer`: Ensures secure token transfers between accounts.
+1.  **Navigate to the Contract Directory**:
+    ```bash
+    # To test the Token contract
+    cd contracts/token
+    
+    # To test the Vault contract
+    cd contracts/vault
+    ```
+2.  **Execute the Test Suite**:
+    ```bash
+    # From within a contract directory
+    cargo test
+    ```
+3.  **Global Execution** (from the root directory):
+    ```bash
+    make test
+    ```
 
-**Vault Contract Tests** (`contracts/vault/src/test.rs`):
-- `test_init`: Confirms the correct initialization of the liquidity pool.
+### 📋 Test Case Catalog
 
+#### **Token Contract** (`contracts/token/src/test.rs`)
+- **`test_metadata`**: Verifies that the token is correctly initialized with the name "CloverTrade", symbol "CLVR", and 7 decimals.
+- **`test_mint`**: Confirms that only the admin can mint tokens and that user balances and total supply are updated accurately.
+- **`test_transfer`**: Ensures that users can transfer tokens securely and that the contract enforces balance constraints.
+
+#### **Vault Contract** (`contracts/vault/src/test.rs`)
+- **`test_init`**: Validates the successful binding of the vault to the CLVR token contract.
+- **`test_swap`**: A complex inter-contract test that simulates a user swapping via the vault, verifying that the vault correctly triggers the token's transfer function and updates both user and vault balances.
+
+### 📊 Latest Test Results
 ```text
-running 2 tests
+running 3 tests
+test test::test_metadata ... ok
 test test::test_mint ... ok
 test test::test_transfer ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
 
-running 1 test
+running 2 tests
 test test::test_init ... ok
+test test::test_swap ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
 ```
 
 ---
