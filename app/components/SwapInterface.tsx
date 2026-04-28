@@ -14,8 +14,8 @@ interface SwapInterfaceProps {
   onConnect: () => void;
   address?: string | null;
   xlmBalance: string;
-  flreBalance: string;
-  swapDirection: "xlm-to-flre" | "flre-to-xlm";
+  clvrBalance: string;
+  swapDirection: "xlm-to-clvr" | "clvr-to-xlm";
   onToggleDirection: () => void;
 }
 
@@ -30,15 +30,15 @@ export default function SwapInterface({
   onConnect,
   address,
   xlmBalance,
-  flreBalance,
+  clvrBalance,
   swapDirection,
   onToggleDirection
 }: SwapInterfaceProps) {
   
-  const isXlmSource = swapDirection === "xlm-to-flre";
-  const sourceBalance = isXlmSource ? xlmBalance : flreBalance;
-  const sourceSymbol = isXlmSource ? "XLM" : "FLRE";
-  const destSymbol = isXlmSource ? "FLRE" : "XLM";
+  const isXlmSource = swapDirection === "xlm-to-clvr";
+  const sourceBalance = isXlmSource ? xlmBalance : clvrBalance;
+  const sourceSymbol = isXlmSource ? "XLM" : "CLVR";
+  const destSymbol = isXlmSource ? "CLVR" : "XLM";
 
   const handleMax = () => {
     const max = parseFloat(sourceBalance.replace(/,/g, ''));
@@ -54,22 +54,22 @@ export default function SwapInterface({
 
   return (
     <div className="glass-card p-8 flex flex-col gap-6 relative z-10 overflow-hidden">
-      {/* Background Decorative Flare */}
-      <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-amber-100/20 rounded-full blur-3xl -z-10" />
+      {/* Background Decorative Clover Glow */}
+      <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-emerald-100/20 rounded-full blur-3xl -z-10" />
 
       {/* Tabs */}
-      <div className="flex space-x-8 border-b border-amber-50 mb-2">
+      <div className="flex space-x-8 border-b border-emerald-50 mb-2">
         {["swap", "liquidity"].map((tab) => (
           <button 
             key={tab}
             onClick={() => setActiveTab(tab as any)}
             className={`pb-4 text-xs font-black uppercase tracking-widest transition-all relative ${
-              activeTab === tab ? "text-amber-600" : "text-slate-400 hover:text-slate-600"
+              activeTab === tab ? "text-emerald-600" : "text-slate-400 hover:text-slate-600"
             }`}
           >
             {tab}
             {activeTab === tab && (
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-amber-500 rounded-t-full shadow-[0_-2px_10px_rgba(245,158,11,0.3)]" />
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-emerald-500 rounded-t-full shadow-[0_-2px_10px_rgba(16,185,129,0.3)]" />
             )}
           </button>
         ))}
@@ -77,7 +77,7 @@ export default function SwapInterface({
 
       <div className="relative flex flex-col gap-2">
         {/* Sell Input Container */}
-        <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col gap-3 transition-colors focus-within:border-amber-200 focus-within:bg-white">
+        <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col gap-3 transition-colors focus-within:border-emerald-200 focus-within:bg-white">
           <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest">
             <span>{activeTab === "swap" ? "Sell" : "Deposit"}</span>
             <span>Balance: <span className="text-slate-600">{sourceBalance}</span></span>
@@ -93,7 +93,7 @@ export default function SwapInterface({
             <div className="flex items-center gap-3">
               <button 
                 onClick={handleMax}
-                className="bg-amber-100/50 px-3 py-1.5 rounded-lg text-[10px] font-black text-amber-700 border border-amber-100 hover:bg-amber-100 transition-all"
+                className="bg-emerald-100/50 px-3 py-1.5 rounded-lg text-[10px] font-black text-emerald-700 border border-emerald-100 hover:bg-emerald-100 transition-all"
               >
                 MAX
               </button>
@@ -108,9 +108,9 @@ export default function SwapInterface({
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
           <button 
             onClick={onToggleDirection}
-            className="w-12 h-12 bg-white border-4 border-white rounded-2xl shadow-xl flex items-center justify-center text-amber-500 hover:text-orange-600 hover:scale-110 active:scale-95 transition-all group"
+            className="w-12 h-12 bg-white border-4 border-white rounded-2xl shadow-xl flex items-center justify-center text-emerald-500 hover:text-green-600 hover:scale-110 active:scale-95 transition-all group"
           >
-            <div className="bg-amber-50 p-2 rounded-xl group-hover:bg-amber-100 transition-colors">
+            <div className="bg-emerald-50 p-2 rounded-xl group-hover:bg-emerald-100 transition-colors">
               <ArrowDownUp size={20} />
             </div>
           </button>
@@ -149,7 +149,7 @@ export default function SwapInterface({
             !address && <Wallet size={18} />
           )}
           <span className="text-sm font-black tracking-widest">
-            {isProcessing ? "IGNITING FLARE..." : address ? (activeTab === "swap" ? "SWAP ASSETS" : "ADD LIQUIDITY") : "CONNECT WALLET"}
+            {isProcessing ? "GROWING CLOVER..." : address ? (activeTab === "swap" ? "SWAP ASSETS" : "ADD LIQUIDITY") : "CONNECT WALLET"}
           </span>
         </div>
       </button>
@@ -157,7 +157,7 @@ export default function SwapInterface({
       {/* Footer Info */}
       <div className="flex justify-between px-2">
         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Slippage Tolerance</span>
-        <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest">0.5%</span>
+        <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">0.5%</span>
       </div>
     </div>
   );

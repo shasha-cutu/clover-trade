@@ -1,9 +1,12 @@
-"use client";
-
 import "./globals.css";
 import { EventsProvider } from "@/context/EventsContext";
 import { WalletProvider } from "@/context/WalletContext";
 import Header from "./components/Header";
+
+export const metadata = {
+  title: "CloverTrade | Next-Gen DeFi on Stellar",
+  description: "CloverTrade is the high-performance Soroban engine for tokens, liquidity, and governance on Stellar.",
+};
 
 export default function RootLayout({
   children,

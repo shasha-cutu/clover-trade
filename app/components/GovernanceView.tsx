@@ -11,7 +11,7 @@ export default function GovernanceView() {
   const [voted, setVoted] = useState(false);
   const [proposals, setProposals] = useState([
     { id: 1, title: "Add USDC/XLM Pool", status: "Active", votes: "1.2M", time: "2d left", desc: "This proposal aims to add a USDC/XLM liquidity pool to the DEX to improve stablecoin accessibility." },
-    { id: 2, title: "Increase FLRE Rewards", status: "Passed", votes: "4.5M", time: "Closed", desc: "Increase the weekly distribution of FLRE tokens to liquidity providers by 15%." },
+    { id: 2, title: "Increase CLVR Rewards", status: "Passed", votes: "4.5M", time: "Closed", desc: "Increase the weekly distribution of CLVR tokens to liquidity providers by 15%." },
   ]);
 
   const handleCreate = (e: React.FormEvent) => {
@@ -53,14 +53,14 @@ export default function GovernanceView() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-black flex items-center gap-2">
-            <Vote className="text-blue-600" />
+            <Vote className="text-emerald-600" />
             Governance
           </h2>
-          <p className="text-sm text-gray-400 mt-1">Vote on proposals and shape the future of Flare Flow.</p>
+          <p className="text-sm text-gray-400 mt-1">Vote on proposals and shape the future of CloverTrade.</p>
         </div>
         <button 
           onClick={() => setShowModal(true)}
-          className="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold text-sm hover:bg-blue-700 transition-all shadow-md active:scale-95"
+          className="bg-emerald-600 text-white px-6 py-2 rounded-xl font-bold text-sm hover:bg-emerald-700 transition-all shadow-md active:scale-95"
         >
           Create Proposal
         </button>
@@ -71,10 +71,10 @@ export default function GovernanceView() {
           <div 
             key={p.id} 
             onClick={() => setSelectedProposal(p)}
-            className="p-5 bg-gray-50 rounded-xl border border-gray-100 hover:border-blue-100 transition-all group cursor-pointer active:bg-blue-50/30"
+            className="p-5 bg-gray-50 rounded-xl border border-gray-100 hover:border-emerald-100 transition-all group cursor-pointer active:bg-emerald-50/30"
           >
             <div className="flex justify-between items-start mb-4">
-              <h3 className="font-bold text-lg group-hover:text-blue-600 transition-colors">{p.title}</h3>
+              <h3 className="font-bold text-lg group-hover:text-emerald-600 transition-colors">{p.title}</h3>
               <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                 p.status === "Active" ? "bg-green-100 text-green-600" : "bg-gray-200 text-gray-500"
               }`}>
@@ -108,7 +108,7 @@ export default function GovernanceView() {
 
             {voted ? (
               <div className="flex flex-col items-center justify-center py-12 gap-4 text-center">
-                <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center animate-bounce">
+                <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center animate-bounce">
                   <CheckCircle2 size={32} />
                 </div>
                 <h3 className="text-xl font-bold">Vote Cast Successfully!</h3>
@@ -117,7 +117,7 @@ export default function GovernanceView() {
             ) : (
               <div className="flex flex-col gap-6">
                 <div>
-                  <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Proposal Details</span>
+                  <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Proposal Details</span>
                   <h3 className="text-xl font-bold mt-1 mb-2">{selectedProposal.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed">{selectedProposal.desc}</p>
                 </div>
@@ -137,7 +137,7 @@ export default function GovernanceView() {
                   <button 
                     onClick={() => handleVote("for")}
                     disabled={voting || selectedProposal.status !== "Active"}
-                    className="w-full py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full py-4 bg-emerald-600 text-white font-bold rounded-xl shadow-lg hover:bg-emerald-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     {voting ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : null}
                     VOTE FOR
@@ -204,7 +204,7 @@ export default function GovernanceView() {
 
                 <button 
                   type="submit"
-                  className="w-full py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 active:scale-[0.98] transition-all"
+                  className="w-full py-4 bg-emerald-600 text-white font-bold rounded-xl shadow-lg hover:bg-emerald-700 active:scale-[0.98] transition-all"
                 >
                   Submit Proposal
                 </button>

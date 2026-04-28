@@ -11,17 +11,17 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        flare: {
-          50: "#fffbeb",
-          100: "#fef3c7",
-          400: "var(--flare)",
-          500: "var(--flare)",
-          600: "#ea580c",
+        clover: {
+          50: "#ecfdf5",
+          100: "#d1fae5",
+          400: "var(--clover)",
+          500: "var(--clover)",
+          600: "#059669",
         },
-        solar: {
-          400: "#fbbf24",
-          500: "#f59e0b",
-          900: "#78350f",
+        emerald: {
+          400: "#34d399",
+          500: "#10b981",
+          900: "#064e3b",
         },
         green: {
           400: "#34d399",

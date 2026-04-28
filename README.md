@@ -1,10 +1,10 @@
-# ☀️ Flare Flow Engine
+# 🍀 CloverTrade Engine
 
-![CI/CD Status](https://github.com/dnarangbe25-gif/flareflow/actions/workflows/ci.yml/badge.svg)
+![CI/CD Status](https://github.com/shasha-cutu/clover-trade/actions/workflows/ci.yml/badge.svg)
 ![Stellar Testnet](https://img.shields.io/badge/Network-Stellar%20Testnet-blue)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
-A high-performance Stellar Soroban ecosystem featuring the Golden Solar AMM, Advanced Token systems, and a premium educational dashboard.
+A high-performance Stellar Soroban ecosystem featuring the Emerald Clover AMM, Advanced Token systems, and a premium educational dashboard.
 
 [**🚀 Live Demo**](https://cheerful-bavarois-4ce5e0.netlify.app)
 
@@ -43,8 +43,8 @@ A high-performance Stellar Soroban ecosystem featuring the Golden Solar AMM, Adv
 
 ### 2. Clone and Install
 ```bash
-git clone https://github.com/dnarangbe25-gif/flareflow.git
-cd flareflow
+git clone https://github.com/dnarangbe25-gif/clover-trade.git
+cd clover-trade
 npm install # Installs frontend dependencies
 ```
 
@@ -79,8 +79,8 @@ make build
 ### Environment Variables
 Create a `.env.local` in the `frontend` directory:
 ```env
-NEXT_PUBLIC_TOKEN_ADDRESS=CBJOKWREK5D3N2L3X7W4U6L2MQQ5P5A3T2N6G7B4H5J6K7LVMQNOPQRA
-NEXT_PUBLIC_POOL_ADDRESS=CCPF4E7W2L3M5N6P7QVRWSXTUVWYZZABACADAEAFAGAHAIAJAKALAMAN
+NEXT_PUBLIC_TOKEN_ADDRESS=CD3FP6WIPWI4UXMD6RVKM6MUNOZNWDUN7IV2AD4SY2GQRGPVTNFJALAJ
+NEXT_PUBLIC_POOL_ADDRESS=CC55QDHD733QIHXMDEQPDZWJUK7EC3L44EDWPI3OBI4JR7RDUXWNOWMU
 NEXT_PUBLIC_RPC_URL=https://soroban-testnet.stellar.org
 ```
 
@@ -106,8 +106,8 @@ stellar contract invoke --id $POOL_ID --source user --network testnet -- \
 
 This project utilizes the following deployed smart contracts on the Stellar Testnet:
 
-- **Advanced Token Contract**: `CBJOKWREK5D3N2L3X7W4U6L2MQQ5P5A3T2N6G7B4H5J6K7LVMQNOPQRA`
-- **Liquidity Pool Contract**: `CCPF4E7W2L3M5N6P7QVRWSXTUVWYZZABACADAEAFAGAHAIAJAKALAMAN`
+- **Advanced Token Contract**: [`CD3FP6WIPWI4UXMD6RVKM6MUNOZNWDUN7IV2AD4SY2GQRGPVTNFJALAJ`](https://stellar.expert/explorer/testnet/contract/CD3FP6WIPWI4UXMD6RVKM6MUNOZNWDUN7IV2AD4SY2GQRGPVTNFJALAJ)
+- **Liquidity Pool Contract**: [`CC55QDHD733QIHXMDEQPDZWJUK7EC3L44EDWPI3OBI4JR7RDUXWNOWMU`](https://stellar.expert/explorer/testnet/contract/CC55QDHD733QIHXMDEQPDZWJUK7EC3L44EDWPI3OBI4JR7RDUXWNOWMU)
 ---
 
 ## 🧪 Smart Contract Testing
@@ -163,4 +163,6 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
+
+Built with ❤️ by the **CloverTrade** team.
 Built with ❤️ by the **Antigravity** team.

@@ -34,7 +34,7 @@ export default function Header() {
         {/* Left Side: Logo */}
         <Link href="/" className="flex items-center">
           <h1 className="text-xl font-black tracking-tighter text-black flex items-center gap-2">
-            FLARE <span className="text-amber-500">FLOW</span>
+            CLOVER <span className="text-emerald-500">TRADE</span>
           </h1>
         </Link>
 
@@ -48,7 +48,7 @@ export default function Header() {
             <Link 
               key={link.name} 
               href={link.href} 
-              className="text-sm font-medium text-gray-500 hover:text-amber-600 transition-colors"
+              className="text-sm font-medium text-gray-500 hover:text-emerald-600 transition-colors"
             >
               {link.name}
             </Link>
@@ -59,14 +59,14 @@ export default function Header() {
         <div className="flex items-center space-x-2">
           {/* Wallet / Launch Button */}
           {pathname === "/" ? (
-            <Link href="/dashboard" className="px-4 py-2 bg-amber-500 text-white rounded-lg text-xs font-bold hover:bg-amber-600 transition-all shadow-sm">
+            <Link href="/dashboard" className="px-4 py-2 bg-emerald-500 text-white rounded-lg text-xs font-bold hover:bg-emerald-600 transition-all shadow-sm">
               LAUNCH APP
             </Link>
           ) : (
             <button 
               onClick={address ? undefined : handleConnect}
               disabled={isConnecting}
-              className="flex items-center gap-2 px-3 py-1.5 border border-amber-200 rounded-lg text-[10px] sm:text-xs font-bold text-amber-700 bg-amber-50/50 hover:bg-amber-50 transition-all cursor-pointer relative z-50"
+              className="flex items-center gap-2 px-3 py-1.5 border border-emerald-200 rounded-lg text-[10px] sm:text-xs font-bold text-emerald-700 bg-emerald-50/50 hover:bg-emerald-50 transition-all cursor-pointer relative z-50"
             >
               <Wallet size={12} />
               <span className="hidden sm:inline">
@@ -116,7 +116,7 @@ export default function Header() {
             <Link 
               key={link.name} 
               href={link.href} 
-              className="text-sm font-medium text-gray-500 hover:text-amber-600 transition-colors"
+              className="text-sm font-medium text-gray-500 hover:text-emerald-600 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               {link.name}

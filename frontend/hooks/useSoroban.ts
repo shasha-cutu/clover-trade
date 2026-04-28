@@ -84,7 +84,7 @@ export const useSoroban = () => {
         console.error("useSoroban: Horizon Result Codes:", codes);
         const ops = codes.operations || [];
         if (ops.includes("op_no_path")) {
-          msg = "No liquidity path found. You need to add liquidity for FLRE on the network first.";
+          msg = "No liquidity path found. You need to add liquidity for CLVR on the network first.";
         } else {
           msg += ` (${codes.transaction}: ${ops.join(', ')})`;
         }
@@ -104,8 +104,8 @@ export const useSoroban = () => {
     try {
       console.log(`useSoroban: addLiquidity triggered for ${amount} XLM`);
       // For now, since setting up a real AMM pool requires both assets, 
-      // we'll guide the user to provide initial FLRE supply first.
-      const msg = "To add liquidity, you must first have both XLM and FLRE. Use the issuer account to mint FLRE to your wallet first.";
+      // we'll guide the user to provide initial CLVR supply first.
+      const msg = "To add liquidity, you must first have both XLM and CLVR. Use the issuer account to mint CLVR to your wallet first.";
       setError(msg);
       alert(msg);
       return { success: false };
@@ -165,9 +165,9 @@ export const useSoroban = () => {
       
       const flreAsset = new StellarSdk.Asset("FLRE", "GCGUQ2F6LKRCD6PUDJKTVNGNEFVGJJPLBM7L64I5YFM7SBQGGXNXMVUM");
       
-      console.log("useSoroban: Seeding liquidity for FLRE...");
+      console.log("useSoroban: Seeding liquidity for CLVR...");
       
-      // Operation 1: Manage Sell Offer (Issuer sells FLRE for XLM)
+      // Operation 1: Manage Sell Offer (Issuer sells CLVR for XLM)
       // This establishes the initial price and liquidity
       const op = StellarSdk.Operation.manageSellOffer({
         selling: flreAsset,

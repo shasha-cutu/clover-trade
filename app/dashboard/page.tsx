@@ -22,10 +22,10 @@ export default function Home() {
   
   const [activeTab, setActiveTab] = useState<"swap" | "liquidity" | "governance">("swap");
   const [amount, setAmount] = useState("");
-  const [balances, setBalances] = useState({ xlm: "---", flre: "---" });
+  const [balances, setBalances] = useState({ xlm: "---", clvr: "---" });
   const [isFetchingBalances, setIsFetchingBalances] = useState(false);
   const [estimatedReceive, setEstimatedReceive] = useState<string>("0.00");
-  const [swapDirection, setSwapDirection] = useState<"xlm-to-flre" | "flre-to-xlm">("xlm-to-flre");
+  const [swapDirection, setSwapDirection] = useState<"xlm-to-clvr" | "clvr-to-xlm">("xlm-to-clvr");
 
   const fetchBalances = async () => {
     if (!address || address.length < 5) return;
@@ -44,7 +44,7 @@ export default function Home() {
       setHasTrustline(!!flreBalanceObj);
       setBalances({ 
         xlm: parseFloat(xlmVal).toLocaleString(undefined, { minimumFractionDigits: 2 }), 
-        flre: parseFloat(flreVal).toLocaleString(undefined, { minimumFractionDigits: 2 })
+        clvr: parseFloat(flreVal).toLocaleString(undefined, { minimumFractionDigits: 2 })
       });
     } catch (e) {
       console.error("Balance fetch failed", e);
@@ -55,7 +55,7 @@ export default function Home() {
 
   useEffect(() => {
     if (address) fetchBalances();
-    else setBalances({ xlm: "---", flre: "---" });
+    else setBalances({ xlm: "---", clvr: "---" });
   }, [address]);
 
   // Sync activeTab with URL hash
@@ -79,11 +79,11 @@ export default function Home() {
         return;
       }
       try {
-        const isXlmToFlre = swapDirection === "xlm-to-flre";
-        const sourceAsset = isXlmToFlre ? "native" : `FLRE:${tokenId}`;
-        const destAsset = isXlmToFlre ? `FLRE:${tokenId}` : "native";
+        const isXlmToClvr = swapDirection === "xlm-to-clvr";
+        const sourceAsset = isXlmToClvr ? "native" : `FLRE:${tokenId}`;
+        const destAsset = isXlmToClvr ? `FLRE:${tokenId}` : "native";
         
-        const res = await fetch(`https://horizon-testnet.stellar.org/paths/strict-send?source_asset_type=${isXlmToFlre ? 'native' : 'credit_alphanum4'}&source_asset_code=${isXlmToFlre ? '' : 'FLRE'}&source_asset_issuer=${isXlmToFlre ? '' : tokenId}&source_amount=${numAmount}&destination_assets=${destAsset}`);
+        const res = await fetch(`https://horizon-testnet.stellar.org/paths/strict-send?source_asset_type=${isXlmToClvr ? 'native' : 'credit_alphanum4'}&source_asset_code=${isXlmToClvr ? '' : 'FLRE'}&source_asset_issuer=${isXlmToClvr ? '' : tokenId}&source_amount=${numAmount}&destination_assets=${destAsset}`);
         const data = await res.json();
         
         if (data._embedded?.records?.[0]) {
@@ -108,11 +108,11 @@ export default function Home() {
     try {
       if (activeTab === "swap") {
         // Note: useSoroban hook might need update to handle direction, 
-        // but we'll assume it handles it for now or just does XLM-to-FLRE.
+        // but we'll assume it handles it for now or just does XLM-to-CLVR.
         const res = await swap(amount, address);
         addEvent({ 
           type: "swap", 
-          desc: swapDirection === "xlm-to-flre" ? `${amount} XLM → ${estimatedReceive} FLRE` : `${amount} FLRE → ${estimatedReceive} XLM`, 
+          desc: swapDirection === "xlm-to-clvr" ? `${amount} XLM → ${estimatedReceive} CLVR` : `${amount} CLVR → ${estimatedReceive} XLM`, 
           txHash: res.txHash 
         });
       } else {
@@ -127,7 +127,7 @@ export default function Home() {
   };
 
   const toggleDirection = () => {
-    setSwapDirection(prev => prev === "xlm-to-flre" ? "flre-to-xlm" : "xlm-to-flre");
+    setSwapDirection(prev => prev === "xlm-to-clvr" ? "clvr-to-xlm" : "xlm-to-clvr");
   };
 
   const handleSetupTrustline = async () => {
@@ -144,7 +144,7 @@ export default function Home() {
     if (!address) return;
     try {
       await seedLiquidity(address);
-      alert("Success! Market seeded with 5,000 FLRE.");
+      alert("Success! Market seeded with 5,000 CLVR.");
       fetchBalances();
     } catch (e) {
       console.error("Seeding failed", e);
@@ -158,7 +158,7 @@ export default function Home() {
         {/* Sidebar */}
         <div className="lg:col-span-4 flex flex-col gap-6">
           <BalanceCard type="xlm" value={balances.xlm} address={address} isLoading={isFetchingBalances} />
-          <BalanceCard type="flre" value={balances.flre} address={tokenId} isLoading={isFetchingBalances} />
+          <BalanceCard type="clvr" value={balances.clvr} address={tokenId} isLoading={isFetchingBalances} />
           <ActivityFeed events={events} />
         </div>
 
@@ -178,38 +178,38 @@ export default function Home() {
               onConnect={connect}
               address={address}
               xlmBalance={balances.xlm}
-              flreBalance={balances.flre}
+              clvrBalance={balances.clvr}
               swapDirection={swapDirection}
               onToggleDirection={toggleDirection}
             />
           )}
           
           {!hasTrustline && address && (
-            <div className="mt-6 p-6 bg-amber-50 border border-amber-100 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="mt-6 p-6 bg-emerald-50 border border-emerald-100 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="flex flex-col gap-1">
-                <h3 className="font-bold text-amber-900 font-solar">Token Activation Required</h3>
-                <p className="text-sm text-amber-700">Your wallet needs to trust the new FLRE asset before you can swap.</p>
+                <h3 className="font-bold text-emerald-900 font-solar">Token Activation Required</h3>
+                <p className="text-sm text-emerald-700">Your wallet needs to trust the new CLVR asset before you can swap.</p>
               </div>
               <button 
                 onClick={handleSetupTrustline}
                 disabled={isProcessing}
-                className="whitespace-nowrap px-6 py-2 bg-amber-500 text-white font-bold rounded-lg hover:bg-amber-600 transition-all shadow-md active:scale-95 disabled:opacity-50"
+                className="whitespace-nowrap px-6 py-2 bg-emerald-500 text-white font-bold rounded-lg hover:bg-emerald-600 transition-all shadow-md active:scale-95 disabled:opacity-50"
               >
-                {isProcessing ? "ACTIVATING..." : "ACTIVATE FLRE"}
+                {isProcessing ? "ACTIVATING..." : "ACTIVATE CLVR"}
               </button>
             </div>
           )}
 
           {isIssuer && (
-            <div className="mt-6 p-6 bg-blue-50 border border-blue-100 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="mt-6 p-6 bg-green-50 border border-green-100 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="flex flex-col gap-1">
-                <h3 className="font-bold text-blue-900 font-solar">Migration Admin Tool</h3>
-                <p className="text-sm text-blue-700">As the issuer, you can seed the initial market liquidity for the FLRE asset.</p>
+                <h3 className="font-bold text-green-900 font-solar">Migration Admin Tool</h3>
+                <p className="text-sm text-green-700">As the issuer, you can seed the initial market liquidity for the CLVR asset.</p>
               </div>
               <button 
                 onClick={handleSeedLiquidity}
                 disabled={isProcessing}
-                className="whitespace-nowrap px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all shadow-md active:scale-95 disabled:opacity-50"
+                className="whitespace-nowrap px-6 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-all shadow-md active:scale-95 disabled:opacity-50"
               >
                 {isProcessing ? "SEEDING..." : "SEED MARKET LIQUIDITY"}
               </button>

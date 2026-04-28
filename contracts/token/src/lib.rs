@@ -15,8 +15,21 @@ pub struct TokenContract;
 
 #[contractimpl]
 impl TokenContract {
+    /// Initialize the contract with metadata and admin.
+    pub fn initialize(env: Env, admin: Address, name: soroban_sdk::String, symbol: soroban_sdk::String) {
+        if env.storage().instance().has(&symbol_short!("admin")) {
+            panic!("Already initialized");
+        }
+        env.storage().instance().set(&symbol_short!("admin"), &admin);
+        env.storage().instance().set(&symbol_short!("name"), &name);
+        env.storage().instance().set(&symbol_short!("symbol"), &symbol);
+    }
+
     /// Mint new tokens and update total supply.
     pub fn mint(env: Env, to: Address, amount: i128) -> Result<(), TokenError> {
+        let admin: Address = env.storage().instance().get(&symbol_short!("admin")).expect("Not initialized");
+        admin.require_auth();
+
         if amount <= 0 { return Err(TokenError::InvalidAmount); }
         
         let balance = Self::balance_of(env.clone(), to.clone());
@@ -27,6 +40,18 @@ impl TokenContract {
 
         env.events().publish((symbol_short!("mint"), to), amount);
         Ok(())
+    }
+
+    pub fn name(env: Env) -> soroban_sdk::String {
+        env.storage().instance().get(&symbol_short!("name")).expect("Not initialized")
+    }
+
+    pub fn symbol(env: Env) -> soroban_sdk::String {
+        env.storage().instance().get(&symbol_short!("symbol")).expect("Not initialized")
+    }
+
+    pub fn decimals(env: Env) -> u32 {
+        7
     }
 
     /// Transfer tokens with explicit result for error propagation.
